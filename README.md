@@ -1,12 +1,27 @@
-# Devsuki Portfolio
+# Devsuki | Game Developer Portfolio
 
-Personal portfolio for Devsuki, a Game Developer and 3D Designer.
+A modern, SaaS-inspired portfolio for **Devsuki**, a specialized Game Developer and 3D Designer.
 
-## Structure
-- `index.html`: Home page with hero section
-- `gallery.html`: Dedicated image gallery page
-- `videos.html`: Dedicated video showcase page
-- `assets/css/style.css`: Modern SaaS-style styling
-- `assets/js/main.js`: Logic for loading images and videos
-- `data/images.json`: List of image URLs in JSON format
-- `data/videos.json`: List of YouTube video URLs in JSON format
+## 🚀 Key Features
+- **Modern SaaS UI:** Clean, dark-themed design with a high-end aesthetic.
+- **Dynamic Content:** Images and videos are loaded from centralized JSON data files.
+- **Optimized Experience:** 
+  - Staggered entry animations for a premium feel.
+  - Interactive lightbox for full-screen image viewing.
+  - Dedicated galleries for assets and video showcases.
+- **High-End Branding:** Custom favicons and unified branding under the name "Devsuki".
+- **Asset Specialty:** Showcasing a commitment to handcrafted assets (96% of featured content).
+
+## 📁 Project Structure
+- `index.html`: Landing page featuring the Game Dev Journey showcase.
+- `gallery.html`: Dedicated page for 3D designs and environment renders.
+- `videos.html`: Dedicated page for gameplay and development logs.
+- `assets/css/style.css`: Custom CSS for layouts, themes, and modern animations.
+- `assets/js/main.js`: Core logic for fetching data, dynamic rendering, and interactive UI elements.
+- `data/`: JSON storage for images and videos, making updates easy and scalable.
+- `assets/favicons/`: Comprehensive set of branding icons for all platforms.
+
+## 🛠️ Tech Stack
+- **Frontend:** HTML5, CSS3 (Vanilla), JavaScript (ES6+).
+- **Design:** Modern SaaS aesthetic, typography focus (Inter font), and responsive layout.
+- **Animation:** CSS Keyframes and Cubic-Bezier easing for smooth, organic transitions.
