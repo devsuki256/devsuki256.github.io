@@ -1,0 +1,144 @@
+document.addEventListener('DOMContentLoaded', () => {
+    // Set current year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Data paths
+    const dataPaths = {
+        images: 'data/images.json',
+        videos: 'data/videos.json'
+    };
+
+    // Load Images
+    async function loadImages() {
+        try {
+            const response = await fetch(dataPaths.images);
+            if (!response.ok) throw new Error('Failed to load images');
+            const imageUrls = await response.json();
+            
+            const gallery = document.getElementById('imageGallery');
+            if(!gallery) return;
+
+            imageUrls.forEach(url => {
+                const item = document.createElement('div');
+                item.className = 'card';
+                
+                const wrapper = document.createElement('div');
+                wrapper.className = 'card-img-wrapper';
+
+                const img = document.createElement('img');
+                img.src = url.trim();
+                img.alt = 'Portfolio Image';
+                img.loading = 'lazy';
+                
+                wrapper.appendChild(img);
+                item.appendChild(wrapper);
+                
+                item.addEventListener('click', () => openLightbox(url.trim()));
+                gallery.appendChild(item);
+            });
+        } catch (error) {
+            console.error('Error loading images:', error);
+        }
+    }
+
+    // Load Videos
+    async function loadVideos() {
+        try {
+            const response = await fetch(dataPaths.videos);
+            if (!response.ok) throw new Error('Failed to load videos');
+            const videoUrls = await response.json();
+            
+            const videoGallery = document.getElementById('videoGallery');
+            if(!videoGallery) return;
+
+            videoUrls.forEach(url => {
+                const videoId = extractYouTubeID(url.trim());
+                if (videoId) {
+                    const item = document.createElement('div');
+                    item.className = 'card';
+                    
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'video-wrapper';
+
+                    const iframe = document.createElement('iframe');
+                    iframe.src = `https://www.youtube.com/embed/${videoId}`;
+                    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+                    iframe.allowFullscreen = true;
+                    iframe.loading = 'lazy';
+                    
+                    wrapper.appendChild(iframe);
+                    item.appendChild(wrapper);
+                    videoGallery.appendChild(item);
+                }
+            });
+        } catch (error) {
+            console.error('Error loading videos:', error);
+        }
+    }
+
+    function extractYouTubeID(url) {
+        const patterns = [
+            /(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/,
+            /youtube\.com\/embed\/([^&\n?#]+)/
+        ];
+        for (let pattern of patterns) {
+            const match = url.match(pattern);
+            if (match) return match[1];
+        }
+        return null;
+    }
+
+    // Lightbox functionality
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const closeBtn = document.querySelector('.close-lightbox');
+
+    function openLightbox(imageSrc) {
+        if(!lightbox || !lightboxImg) return;
+        lightboxImg.src = imageSrc;
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Prevent scrolling
+    }
+
+    function closeLightbox() {
+        if(!lightbox) return;
+        lightbox.classList.remove('active');
+        document.body.style.overflow = ''; // Restore scrolling
+    }
+
+    if (closeBtn) {
+        closeBtn.addEventListener('click', closeLightbox);
+    }
+    
+    if (lightbox) {
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox || e.target.classList.contains('lightbox-content')) {
+                closeLightbox();
+            }
+        });
+    }
+
+    // Escape key to close lightbox
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && lightbox && lightbox.classList.contains('active')) {
+            closeLightbox();
+        }
+    });
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+
+    // Initialize
+    loadImages();
+    loadVideos();
+});
