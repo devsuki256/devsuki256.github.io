@@ -27,11 +27,14 @@
 
     <section id="gallery" class="section" style="padding-top: 160px;">
         <div class="container">
-            <div class="section-header">
+            <div class="section-header animate-fade-up" style="opacity: 0;">
                 <h2 class="section-title">Image Gallery</h2>
                 <p class="section-subtitle">A collection of 3D designs, environments, and game assets.</p>
             </div>
-            <div class="grid gallery-grid" id="imageGallery">
+            <div id="gallery-loader" class="loader-container">
+                <div class="loader"></div>
+            </div>
+            <div class="grid gallery-grid hidden" id="imageGallery">
                 <!-- Images loaded via JS -->
             </div>
         </div>

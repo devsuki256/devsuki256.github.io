@@ -18,9 +18,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const gallery = document.getElementById('imageGallery');
             if(!gallery) return;
 
-            imageUrls.forEach(url => {
+            imageUrls.forEach((url, index) => {
                 const item = document.createElement('div');
-                item.className = 'card';
+                item.className = 'card animate-fade-up';
+                item.style.animationDelay = `${(index * 0.1) + 0.2}s`;
+                item.style.opacity = '0';
                 
                 const wrapper = document.createElement('div');
                 wrapper.className = 'card-img-wrapper';
@@ -36,6 +38,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 item.addEventListener('click', () => openLightbox(url.trim()));
                 gallery.appendChild(item);
             });
+
+            // Hide loader and show gallery
+            const loader = document.getElementById('gallery-loader');
+            if (loader) loader.classList.add('hidden');
+            gallery.classList.remove('hidden');
+
         } catch (error) {
             console.error('Error loading images:', error);
         }
@@ -51,11 +59,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const videoGallery = document.getElementById('videoGallery');
             if(!videoGallery) return;
 
-            videoUrls.forEach(url => {
+            videoUrls.forEach((url, index) => {
                 const videoId = extractYouTubeID(url.trim());
                 if (videoId) {
                     const item = document.createElement('div');
-                    item.className = 'card';
+                    item.className = 'card animate-fade-up';
+                    item.style.animationDelay = `${(index * 0.1) + 0.2}s`;
+                    item.style.opacity = '0';
                     
                     const wrapper = document.createElement('div');
                     wrapper.className = 'video-wrapper';
@@ -71,6 +81,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     videoGallery.appendChild(item);
                 }
             });
+
+            // Hide loader and show gallery
+            const loader = document.getElementById('video-loader');
+            if (loader) loader.classList.add('hidden');
+            videoGallery.classList.remove('hidden');
+
         } catch (error) {
             console.error('Error loading videos:', error);
         }
