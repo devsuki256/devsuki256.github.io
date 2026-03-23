@@ -175,12 +175,20 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Count-up Animation for Stats
-    const animateStats = () => {
-        const stats = document.querySelectorAll('.stat-number');
+    // Count-up Animation for Metrics
+    const animateMetrics = () => {
+        const metrics = document.querySelectorAll('.metric-number');
         
+        if (!('IntersectionObserver' in window)) {
+            // Fallback for older browsers: just show the numbers
+            metrics.forEach(metric => {
+                metric.textContent = metric.getAttribute('data-target');
+            });
+            return;
+        }
+
         const options = {
-            threshold: 0.5,
+            threshold: 0.1, // Lower threshold to ensure it triggers earlier
             rootMargin: '0px'
         };
 
@@ -188,14 +196,13 @@ document.addEventListener('DOMContentLoaded', () => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     const target = parseInt(entry.target.getAttribute('data-target'));
-                    const duration = 1500; // ms
+                    const duration = 1500; 
                     const startTime = performance.now();
                     
                     const updateCount = (currentTime) => {
                         const elapsed = currentTime - startTime;
                         const progress = Math.min(elapsed / duration, 1);
                         
-                        // Ease out cubic
                         const easeOut = 1 - Math.pow(1 - progress, 3);
                         const currentCount = Math.floor(easeOut * target);
                         
@@ -214,11 +221,11 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }, options);
 
-        stats.forEach(stat => observer.observe(stat));
+        metrics.forEach(metric => observer.observe(metric));
     };
 
     // Initialize
     loadImages();
     loadVideos();
-    animateStats();
+    animateMetrics();
 });
